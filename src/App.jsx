@@ -36,8 +36,8 @@ function App() {
       <div hidden={mainHidden}>
         <h2>Goals</h2>
         <ul>
-          {goals.map((goal) => (
-            <li key={goal.date}>
+          {goals.map((goal, index) => (
+            <li key={`${goal.name}-${index}`} id={`${goal.name}-${index}`}>
               <Card
                 name={goal.name}
                 date={goal.date}
