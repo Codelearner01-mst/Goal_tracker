@@ -2,11 +2,32 @@ body {
   min-width: 320px;
   min-height: 100vh;
 }
+
+header {
+  background-color: #030624;
+  margin-inline: 2px;
+  border-radius: 5px;
+  box-shadow: 1px 2px 5px rgba(239, 238, 245, 0.856);
+  border: 2px solid rgba(247, 247, 247, 0.377);
+}
+
+header p {
+  color: white;
+  font-size: 1.3rem;
+  font-weight: 900;
+}
 .container {
   background-color: white;
 }
-.action {
+.goals-container {
   margin-top: 65px;
+  display: flex;
+  flex-direction: column;
+}
+
+.goals-heading {
+  font-size: 1.2rem;
+  font-weight: 500;
 }
 .sub-title {
   font-size: 0.9rem;
@@ -22,12 +43,12 @@ h1 {
   flex-direction: row;
   justify-content: center;
   align-items: center;
-
   gap: 9px;
-  border: 2px solid rgba(247, 247, 247, 0.377);
+  border: 2px solid rgba(255, 255, 255, 0.849);
   border-radius: 5px;
-  box-shadow: 1px 2px 5px rgba(10, 4, 31, 0.856);
-  padding: 10px;
+  box-shadow: 2px 2px 8px rgba(235, 234, 238, 0.856);
+  padding: 16px;
+  background-color: rgb(236, 234, 234);
 }
 .card .status {
   font-size: 0.9rem;
@@ -43,17 +64,20 @@ h1 {
   border: 2px solid rgba(247, 247, 247, 0.377);
   box-shadow: 1px 2px 8px rgb(199, 196, 196);
   padding: 15px;
+  margin-top: 40px;
   border-radius: 5px;
   width: 75%;
   margin: auto;
 }
 
 .form-container button {
+  border: 1px solid transparent;
+  border-radius: 5px;
   padding: 0.5em 1em;
   font-size: 0.95em;
   margin-top: 12px;
   font-weight: 500;
-  background-color: #010103;
+  background-color: #101013e1;
   color: white;
   cursor: pointer;
   transition: border-color 0.25s;
@@ -81,18 +105,21 @@ li {
   gap: 2px;
 }
 
-button {
-  border-radius: 8px;
+.create-goal-btn {
+  position: absolute;
+  bottom: 0;
+  right: 28px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
   border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
   margin-top: 12px;
   font-weight: 500;
-  background-color: #172bdf;
+  background-color: #0a0d24;
   color: white;
   cursor: pointer;
-  transition: border-color 0.25s;
   margin-bottom: 16px;
+  font-size: 30px;
 }
 button:hover {
   border-color: #646cff;

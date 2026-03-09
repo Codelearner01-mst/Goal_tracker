@@ -74,7 +74,7 @@ export function Modal({ goals, setGoals, setMainhidden }) {
           </div>
           <div>
             <button type="submit" className="btn">
-              Create goal
+              Add goal
             </button>
           </div>
         </div>
