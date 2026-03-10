@@ -13,7 +13,6 @@ function App() {
   );
   const [openForm, setOpenForm] = useState(false);
 
-  //localStorage.removeItem("goals");
   const handleFormOpen = () => {
     setOpenForm(true);
   };
@@ -28,7 +27,7 @@ function App() {
 
     setGoals((goals) => {
       const copiedGoals = [...goals];
-      const index = getIndex(cardId + 1, copiedGoals);
+      const index = getIndex(cardId, copiedGoals);
       copiedGoals.splice(index, 1);
       localStorage.setItem("goals", JSON.stringify(copiedGoals));
       return copiedGoals;
@@ -55,10 +54,10 @@ function App() {
                 </div>
               )}
               <ul>
-                {goals.map((goal, index) => (
+                {goals.map((goal) => (
                   <li
-                    key={`${goal.name}-${index}`}
-                    id={`${goal.name}-${index}`}
+                    key={`${goal.name}-${goal.id}`}
+                    id={`${goal.name}-${goal.id}`}
                   >
                     <button className="card-remove" onClick={handleDeletion}>
                       remove

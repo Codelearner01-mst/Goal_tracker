@@ -4,7 +4,6 @@ export function Modal({ goals, setGoals, setOpenForm }) {
   const [name, setName] = useState("");
   const [date, setDate] = useState("");
   const [description, setDescription] = useState("");
-  // const [formHidden, setFormHidden] = useState(false);
 
   const handleNameChange = (e) => {
     setName(e.target.value);
@@ -35,7 +34,7 @@ export function Modal({ goals, setGoals, setOpenForm }) {
     const updatedGoals = [...goals, goalObj];
     setGoals(updatedGoals);
     localStorage.setItem("goals", JSON.stringify(updatedGoals));
-    setOpenForm(true);
+    setOpenForm(false);
 
     // Reset form fields
     setName("");
