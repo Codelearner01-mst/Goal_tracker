@@ -1,10 +1,10 @@
 import { useState } from "react";
 
-export function Modal({ goals, setGoals, setMainhidden }) {
+export function Modal({ goals, setGoals, setOpenForm }) {
   const [name, setName] = useState("");
   const [date, setDate] = useState("");
   const [description, setDescription] = useState("");
-  const [formHidden, setFormHidden] = useState(false);
+  // const [formHidden, setFormHidden] = useState(false);
 
   const handleNameChange = (e) => {
     setName(e.target.value);
@@ -19,8 +19,7 @@ export function Modal({ goals, setGoals, setMainhidden }) {
   };
 
   const handleFormHidden = () => {
-    setFormHidden(true);
-    setMainhidden(false);
+    setOpenForm(false);
   };
 
   const handleSubmission = (e) => {
@@ -34,8 +33,7 @@ export function Modal({ goals, setGoals, setMainhidden }) {
     const updatedGoals = [...goals, goalObj];
     setGoals(updatedGoals);
     localStorage.setItem("goals", JSON.stringify(updatedGoals));
-    setFormHidden(true);
-    setMainhidden(false);
+    setOpenForm(true);
 
     // Reset form fields
     setName("");
@@ -45,7 +43,7 @@ export function Modal({ goals, setGoals, setMainhidden }) {
 
   return (
     <>
-      <div className="modal-overlay" hidden={formHidden}>
+      <div className="modal-overlay">
         <div className="modal-content">
           <button
             className="modal-close"

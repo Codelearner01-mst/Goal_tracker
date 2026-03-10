@@ -12,17 +12,17 @@ function App() {
       : [],
   );
 
-  const [mainHidden, setMainHidden] = useState(false);
+  const [openForm, setOpenForm] = useState(false);
 
   const handleFormOpen = () => {
-    setMainHidden(true);
+    setOpenForm(true);
   };
 
   return (
     <>
       <Header />
       <main>
-        <div className="container" hidden={mainHidden}>
+        <div className="container">
           <div className="goals-container">
             <div className="goals-heading">
               <h2>Goals</h2>
@@ -60,12 +60,8 @@ function App() {
             </button>
           </div>
         </div>
-        {mainHidden && (
-          <Modal
-            goals={goals}
-            setGoals={setGoals}
-            setMainhidden={setMainHidden}
-          />
+        {openForm && (
+          <Modal goals={goals} setGoals={setGoals} setOpenForm={setOpenForm} />
         )}
       </main>
       <Footer />
