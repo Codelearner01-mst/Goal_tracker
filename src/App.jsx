@@ -43,6 +43,8 @@ function App() {
                     key={`${goal.name}-${index}`}
                     id={`${goal.name}-${index}`}
                   >
+                    <button className="card-remove">remove</button>
+
                     <Card
                       name={goal.name}
                       date={goal.date}

@@ -228,6 +228,14 @@ main {
   font-weight: 600;
 }
 
+.card-remove {
+  font-size: 0.87rem;
+  color: var(--text-secondary);
+  text-align: left;
+  margin-bottom: 15px;
+  cursor: pointer;
+}
+
 .card-description {
   color: var(--text-secondary);
   font-size: 0.95rem;
