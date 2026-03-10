@@ -24,7 +24,9 @@ export function Modal({ goals, setGoals, setOpenForm }) {
 
   const handleSubmission = (e) => {
     e.preventDefault();
+    const id = !goals.length ? 1 : goals[goals.length - 1].id + 1;
     const goalObj = {
+      id: id,
       name: name,
       description: description,
       date: date,

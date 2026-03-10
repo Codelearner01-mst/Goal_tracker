@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Header } from "./header";
 import "./App.css";
 import { Modal } from "./modal";
@@ -11,11 +11,28 @@ function App() {
       ? JSON.parse(localStorage.getItem("goals"))
       : [],
   );
-
   const [openForm, setOpenForm] = useState(false);
 
+  //localStorage.removeItem("goals");
   const handleFormOpen = () => {
     setOpenForm(true);
+  };
+
+  function getIndex(id, goals) {
+    return goals.findIndex((goal) => goal.id === id);
+  }
+
+  const handleDeletion = (e) => {
+    const selectedCard = e.target.closest("li");
+    const cardId = parseInt(selectedCard.id.split("-")[1]);
+
+    setGoals((goals) => {
+      const copiedGoals = [...goals];
+      const index = getIndex(cardId + 1, copiedGoals);
+      copiedGoals.splice(index, 1);
+      localStorage.setItem("goals", JSON.stringify(copiedGoals));
+      return copiedGoals;
+    });
   };
 
   return (
@@ -43,7 +60,9 @@ function App() {
                     key={`${goal.name}-${index}`}
                     id={`${goal.name}-${index}`}
                   >
-                    <button className="card-remove">remove</button>
+                    <button className="card-remove" onClick={handleDeletion}>
+                      remove
+                    </button>
 
                     <Card
                       name={goal.name}
