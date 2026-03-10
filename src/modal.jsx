@@ -3,18 +3,21 @@ import { useState } from "react";
 export function Modal({ goals, setGoals, setMainhidden }) {
   const [name, setName] = useState("");
   const [date, setDate] = useState("");
-  const [description, setDecription] = useState("");
+  const [description, setDescription] = useState("");
   const [formHidden, setFormHidden] = useState(false);
 
   const handleNameChange = (e) => {
     setName(e.target.value);
   };
+
   const handleDateChange = (e) => {
     setDate(e.target.value);
   };
+
   const handleDescriptionChange = (e) => {
-    setDecription(e.target.value);
+    setDescription(e.target.value);
   };
+
   const handleFormHidden = () => {
     setFormHidden(true);
     setMainhidden(false);
@@ -33,52 +36,91 @@ export function Modal({ goals, setGoals, setMainhidden }) {
     localStorage.setItem("goals", JSON.stringify(updatedGoals));
     setFormHidden(true);
     setMainhidden(false);
+
+    // Reset form fields
+    setName("");
+    setDate("");
+    setDescription("");
   };
 
   return (
     <>
-      <form onSubmit={handleSubmission} hidden={formHidden}>
-        <div className="form-container">
-          <div onClick={handleFormHidden}>
-            <span>Close</span>
+      <div className="modal-overlay" hidden={formHidden}>
+        <div className="modal-content">
+          <button
+            className="modal-close"
+            onClick={handleFormHidden}
+            aria-label="Close modal"
+          >
+            ✕
+          </button>
+
+          <div className="modal-header">
+            <h2>Create New Goal</h2>
+            <p>Add a new goal to track your progress</p>
           </div>
-          <h2>Provide goal datails:</h2>
-          <div className="input-container">
-            <label htmlFor="title">Title:</label>
-            <input
-              type="text"
-              id="title"
-              className="input-field"
-              onChange={handleNameChange}
-            />
-          </div>
-          <div>
-            <label htmlFor="date">End date:</label>
-            <input
-              type="date"
-              id="date"
-              className="date-field"
-              onChange={handleDateChange}
-            />
-          </div>
-          <div className="description">
-            <label htmlFor="desciption">Description:</label>
-            <textarea
-              id="desciption"
-              name="desciption"
-              className="input-field"
-              required
-              rows="5"
-              onChange={handleDescriptionChange}
-            ></textarea>
-          </div>
-          <div>
-            <button type="submit" className="btn">
-              Add goal
-            </button>
-          </div>
+
+          <form onSubmit={handleSubmission} className="goal-form">
+            <div className="form-group">
+              <label htmlFor="title" className="form-label">
+                Goal Title
+              </label>
+              <input
+                type="text"
+                id="title"
+                className="form-input"
+                placeholder="Enter your goal title"
+                value={name}
+                onChange={handleNameChange}
+                required
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="date" className="form-label">
+                Target Date
+              </label>
+              <input
+                type="date"
+                id="date"
+                className="form-input"
+                value={date}
+                onChange={handleDateChange}
+                required
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="description" className="form-label">
+                Description
+              </label>
+              <textarea
+                id="description"
+                name="description"
+                className="form-textarea"
+                placeholder="Describe your goal in detail"
+                value={description}
+                onChange={handleDescriptionChange}
+                rows="4"
+                required
+              ></textarea>
+            </div>
+
+            <div className="form-actions">
+              <button
+                type="button"
+                className="btn-secondary"
+                onClick={handleFormHidden}
+              >
+                Cancel
+              </button>
+              <button type="submit" className="btn-primary">
+                Add Goal
+              </button>
+            </div>
+          </form>
         </div>
-      </form>
+      </div>
     </>
   );
 }

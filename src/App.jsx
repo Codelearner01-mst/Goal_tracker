@@ -1,10 +1,9 @@
-import { useState } from "react";
-import { useRef } from "react";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Header } from "./header";
 import "./App.css";
 import { Modal } from "./modal";
 import { Card } from "./card";
+import { Footer } from "./footer";
 
 function App() {
   const [goals, setGoals] = useState(
@@ -12,27 +11,30 @@ function App() {
       ? JSON.parse(localStorage.getItem("goals"))
       : [],
   );
-  localStorage.removeItem("goals");
 
   const [mainHidden, setMainHidden] = useState(false);
 
   const handleFormOpen = () => {
     setMainHidden(true);
   };
+
   return (
     <>
       <Header />
       <main>
         <div className="container" hidden={mainHidden}>
-          <p>Track your goals here. Improve your life</p>
           <div className="goals-container">
             <div className="goals-heading">
               <h2>Goals</h2>
+              <span className="goals-count">0</span>
             </div>
             <div className="goals">
               {!goals.length && (
                 <div>
-                  <p className="sub-title">You do not have any goal yet.</p>
+                  <p className="sub-title">
+                    You do not have any goal yet. Create your first goal to get
+                    started!
+                  </p>
                 </div>
               )}
               <ul>
@@ -66,6 +68,7 @@ function App() {
           />
         )}
       </main>
+      <Footer />
     </>
   );
 }
