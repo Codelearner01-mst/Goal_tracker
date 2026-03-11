@@ -1,4 +1,4 @@
-export function Header() {
+export function Header({ count }) {
   return (
     <>
       <header className="app-header">
@@ -13,7 +13,7 @@ export function Header() {
             <div className="stats-badge">
               <span className="stats-label">Active Goals</span>
               <span className="stats-value" id="goals-count">
-                0
+                {count}
               </span>
             </div>
           </div>

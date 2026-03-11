@@ -36,13 +36,13 @@ function App() {
 
   return (
     <>
-      <Header />
+      <Header count={goals.length} />
       <main>
         <div className="container">
           <div className="goals-container">
             <div className="goals-heading">
               <h2>Goals</h2>
-              <span className="goals-count">0</span>
+              <span className="goals-count">{goals.length}</span>
             </div>
             <div className="goals">
               {!goals.length && (
