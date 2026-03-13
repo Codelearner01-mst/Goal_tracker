@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { saveGoals } from "./utils/storage";
 
 export function Modal({ goals, setGoals, setOpenForm }) {
   const [name, setName] = useState("");
@@ -29,11 +30,12 @@ export function Modal({ goals, setGoals, setOpenForm }) {
       name: name,
       description: description,
       date: date,
+      status: false,
     };
 
     const updatedGoals = [...goals, goalObj];
     setGoals(updatedGoals);
-    localStorage.setItem("goals", JSON.stringify(updatedGoals));
+    saveGoals(updatedGoals);
     setOpenForm(false);
 
     // Reset form fields

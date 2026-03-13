@@ -4,22 +4,17 @@ import "./App.css";
 import { Modal } from "./modal";
 import { Card } from "./card";
 import { Footer } from "./footer";
+import { getIndex } from "./utils/helper";
+import { savedGoals } from "./utils/storage";
 
 function App() {
-  const [goals, setGoals] = useState(
-    localStorage.getItem("goals")
-      ? JSON.parse(localStorage.getItem("goals"))
-      : [],
-  );
+  const GOALS = savedGoals();
+  const [goals, setGoals] = useState(GOALS);
   const [openForm, setOpenForm] = useState(false);
 
   const handleFormOpen = () => {
     setOpenForm(true);
   };
-
-  function getIndex(id, goals) {
-    return goals.findIndex((goal) => goal.id === id);
-  }
 
   const handleDeletion = (e) => {
     const selectedCard = e.target.closest("li");
@@ -67,6 +62,7 @@ function App() {
                       name={goal.name}
                       date={goal.date}
                       description={goal.description}
+                      goal={goal}
                     />
                   </li>
                 ))}

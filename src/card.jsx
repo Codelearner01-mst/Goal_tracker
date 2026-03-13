@@ -1,8 +1,24 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { savedGoals } from "./utils/storage";
+import { saveGoals } from "./utils/storage";
+import { getIndex } from "./utils/helper";
 
-export function Card({ name, date, description }) {
+export function Card({ name, date, description, goal }) {
   const [status, setStatus] = useState("Ongoing");
-  const [isCompleted, setIsCompleted] = useState(false);
+  const [isCompleted, setIsCompleted] = useState(goal.status);
+
+  useEffect(() => {
+    if (isCompleted) {
+      setStatus("Completed");
+    } else {
+      setStatus("Ongoing");
+    }
+    const GOALS = savedGoals();
+    const index = getIndex(goal.id, GOALS);
+    GOALS[index].status = isCompleted;
+    console.log(GOALS);
+    saveGoals(GOALS);
+  }, [isCompleted, goal.id]);
 
   const handleStatus = (e) => {
     const isChecked = e.target.checked;
