@@ -1,8 +1,8 @@
 /* Modern Design System Variables */
 :root {
-  --primary-color: #6366f1;
-  --primary-hover: #4f46e5;
-  --secondary-color: #10b981;
+  --primary-color: #060624;
+  --primary-hover: #0b0e6d;
+  --secondary-color: #10b981e5;
   --danger-color: #ef4444;
   --text-primary: #111827;
   --text-secondary: #6b7280;
@@ -11,7 +11,7 @@
   --bg-secondary: #ffffff;
   --bg-card: #ffffff;
   --border-color: #e5e7eb;
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-sm: 0 1px 2px 0 rgba(250, 38, 38, 0.05);
   --shadow-md:
     0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   --shadow-lg:
@@ -40,6 +40,8 @@
 /* Reset and base styles */
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 #root {
@@ -192,11 +194,11 @@ main {
 }
 
 .card:hover {
-  border-color: var(--primary-color);
+  border-color: var(--primary-hover);
   box-shadow: var(--shadow-md);
 }
 
-.card.completed {
+.card.completed:hover {
   opacity: 0.8;
   border-color: var(--secondary-color);
 }
@@ -212,7 +214,7 @@ main {
   width: 20px;
   height: 20px;
   cursor: pointer;
-  accent-color: var(--primary-color);
+  accent-color: rgb(145, 252, 145);
   transition: all 0.2s ease;
 }
 
