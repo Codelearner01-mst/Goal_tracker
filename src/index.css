@@ -121,13 +121,15 @@ li {
   margin-bottom: 16px;
   font-size: 30px;
 }
-button:hover {
-  border-color: #646cff;
-  background-color: rgb(8, 8, 53);
+
+.card-remove {
+  border: 1px solid;
+  border-radius: 5px;
+  padding: 2px;
+  background-color: white;
 }
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+.card-remove:hover {
+  background-color: rgba(180, 173, 173, 0.74);
 }
 
 footer {
