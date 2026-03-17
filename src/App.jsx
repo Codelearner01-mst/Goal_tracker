@@ -6,14 +6,30 @@ import { Card } from "./card";
 import { Footer } from "./footer";
 import { getIndex } from "./utils/helper";
 import { savedGoals } from "./utils/storage";
+import { filterActiveGoals } from "./utils/filterActive";
 
 function App() {
   const GOALS = savedGoals();
   const [goals, setGoals] = useState(GOALS);
   const [openForm, setOpenForm] = useState(false);
 
+  const activeGoals = filterActiveGoals(goals);
+
+  useEffect(() => {
+    localStorage.setItem("goals", JSON.stringify(goals));
+  }, [goals]);
+
   const handleFormOpen = () => {
     setOpenForm(true);
+  };
+
+  const toggleStatus = (id) => {
+    setGoals((goals) => {
+      const newGoals = goals.map((goal) =>
+        goal.id === id ? { ...goal, completed: !goal.completed } : goal,
+      );
+      return newGoals;
+    });
   };
 
   const handleDeletion = (e) => {
@@ -24,14 +40,13 @@ function App() {
       const copiedGoals = [...goals];
       const index = getIndex(cardId, copiedGoals);
       copiedGoals.splice(index, 1);
-      localStorage.setItem("goals", JSON.stringify(copiedGoals));
       return copiedGoals;
     });
   };
 
   return (
     <>
-      <Header count={goals.length} />
+      <Header count={activeGoals.length} />
       <main>
         <div className="container">
           <div className="goals-container">
@@ -58,12 +73,7 @@ function App() {
                       remove
                     </button>
 
-                    <Card
-                      name={goal.name}
-                      date={goal.date}
-                      description={goal.description}
-                      goal={goal}
-                    />
+                    <Card goal={goal} toggleStatus={toggleStatus} />
                   </li>
                 ))}
               </ul>
@@ -76,9 +86,7 @@ function App() {
             </button>
           </div>
         </div>
-        {openForm && (
-          <Modal goals={goals} setGoals={setGoals} setOpenForm={setOpenForm} />
-        )}
+        {openForm && <Modal setGoals={setGoals} setOpenForm={setOpenForm} />}
       </main>
       <Footer />
     </>

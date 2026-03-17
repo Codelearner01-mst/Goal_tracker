@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { saveGoals } from "./utils/storage";
+import { savedGoals, saveGoals } from "./utils/storage";
 
-export function Modal({ goals, setGoals, setOpenForm }) {
+export function Modal({ setGoals, setOpenForm }) {
   const [name, setName] = useState("");
   const [date, setDate] = useState("");
   const [description, setDescription] = useState("");
@@ -24,13 +24,14 @@ export function Modal({ goals, setGoals, setOpenForm }) {
 
   const handleSubmission = (e) => {
     e.preventDefault();
+    const goals = savedGoals();
     const id = !goals.length ? 1 : goals[goals.length - 1].id + 1;
     const goalObj = {
       id: id,
       name: name,
       description: description,
       date: date,
-      status: false,
+      completed: false,
     };
 
     const updatedGoals = [...goals, goalObj];

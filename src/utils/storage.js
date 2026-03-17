@@ -8,6 +8,6 @@ export function savedGoals() {
   try {
     return JSON.parse(localStorage.getItem("goals")) || [];
   } catch (error) {
-    console.error("Goals data not found");
+    console.error("Goals data not found", error);
   }
 }
