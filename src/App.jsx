@@ -4,6 +4,7 @@ import "./App.css";
 import { Modal } from "./modal";
 import { Card } from "./card";
 import { Footer } from "./footer";
+import { Filter } from "./filter";
 import { getIndex } from "./utils/helper";
 import { savedGoals } from "./utils/storage";
 import { filterActiveGoals } from "./utils/filterActive";
@@ -50,6 +51,7 @@ function App() {
       <main>
         <div className="container">
           <div className="goals-container">
+            <Filter />
             <div className="goals-heading">
               <h2>Goals</h2>
               <span className="goals-count">{goals.length}</span>
@@ -72,7 +74,6 @@ function App() {
                     <button className="card-remove" onClick={handleDeletion}>
                       remove
                     </button>
-
                     <Card goal={goal} toggleStatus={toggleStatus} />
                   </li>
                 ))}
