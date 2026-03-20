@@ -7,11 +7,12 @@ import { Footer } from "./footer";
 import { Filter } from "./filter";
 import { getIndex } from "./utils/helper";
 import { savedGoals } from "./utils/storage";
-import { filterActiveGoals } from "./utils/filterActive";
+import { filterActiveGoals } from "./utils/filter";
 
 function App() {
   const GOALS = savedGoals();
   const [goals, setGoals] = useState(GOALS);
+  const [filteredGoals, setFilteredGoals] = useState(goals);
   const [openForm, setOpenForm] = useState(false);
 
   const activeGoals = filterActiveGoals(goals);
@@ -25,7 +26,7 @@ function App() {
   };
 
   const toggleStatus = (id) => {
-    setGoals((goals) => {
+    setFilteredGoals((goals) => {
       const newGoals = goals.map((goal) =>
         goal.id === id ? { ...goal, completed: !goal.completed } : goal,
       );
@@ -37,7 +38,7 @@ function App() {
     const selectedCard = e.target.closest("li");
     const cardId = parseInt(selectedCard.id.split("-")[1]);
 
-    setGoals((goals) => {
+    setFilteredGoals((goals) => {
       const copiedGoals = [...goals];
       const index = getIndex(cardId, copiedGoals);
       copiedGoals.splice(index, 1);
@@ -51,7 +52,7 @@ function App() {
       <main>
         <div className="container">
           <div className="goals-container">
-            <Filter />
+            <Filter setFilteredGoals={setFilteredGoals} />
             <div className="goals-heading">
               <h2>Goals</h2>
               <span className="goals-count">{goals.length}</span>
@@ -66,7 +67,7 @@ function App() {
                 </div>
               )}
               <ul>
-                {goals.map((goal) => (
+                {filteredGoals.map((goal) => (
                   <li
                     key={`${goal.name}-${goal.id}`}
                     id={`${goal.name}-${goal.id}`}
@@ -87,7 +88,12 @@ function App() {
             </button>
           </div>
         </div>
-        {openForm && <Modal setGoals={setGoals} setOpenForm={setOpenForm} />}
+        {openForm && (
+          <Modal
+            setFilteredGoals={setFilteredGoals}
+            setOpenForm={setOpenForm}
+          />
+        )}
       </main>
       <Footer />
     </>

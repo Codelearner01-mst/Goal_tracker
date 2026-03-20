@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { savedGoals, saveGoals } from "./utils/storage";
 
-export function Modal({ setGoals, setOpenForm }) {
+export function Modal({ setFilteredGoals, setOpenForm }) {
   const [name, setName] = useState("");
   const [date, setDate] = useState("");
   const [description, setDescription] = useState("");
@@ -35,7 +35,7 @@ export function Modal({ setGoals, setOpenForm }) {
     };
 
     const updatedGoals = [...goals, goalObj];
-    setGoals(updatedGoals);
+    setFilteredGoals(updatedGoals);
     saveGoals(updatedGoals);
     setOpenForm(false);
 

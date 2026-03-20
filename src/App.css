@@ -111,7 +111,7 @@ main {
   border-radius: 15px;
   background-color: #f3f3f8;
   padding-inline: 12px;
-  padding-block: 2px;
+  padding-block: 1px;
 }
 
 .filter-container div:hover {
@@ -119,6 +119,10 @@ main {
   background-color: rgba(219, 219, 219, 0.918);
   border-bottom: 1px solid blue;
   padding-bottom: 2px;
+}
+
+.filter-category-text {
+  font-size: 0.85rem;
 }
 
 .goals-heading {
