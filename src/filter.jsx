@@ -1,9 +1,6 @@
 import { filterActiveGoals, filterCompleted } from "./utils/filter";
-import { savedGoals } from "./utils/storage";
 
-const goals = savedGoals();
-
-export function Filter({ setFilteredGoals }) {
+export function Filter({ goals, setFilteredGoals }) {
   const completed = filterCompleted(goals);
   const active = filterActiveGoals(goals);
 

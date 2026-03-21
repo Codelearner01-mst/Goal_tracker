@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useState, useActionState } from "react";
 import { savedGoals, saveGoals } from "./utils/storage";
+//import { submitForm } from "./utils/submmission";
+//import { SubmitConfirmationCard } from "./submitCard";
 
-export function Modal({ setFilteredGoals, setOpenForm }) {
+export function Modal({ setGoals, setFilteredGoals, setOpenForm }) {
   const [name, setName] = useState("");
   const [date, setDate] = useState("");
   const [description, setDescription] = useState("");
+  //const [state, submit, isPending] = useActionState(submitForm, "");
 
   const handleNameChange = (e) => {
     setName(e.target.value);
@@ -24,7 +27,9 @@ export function Modal({ setFilteredGoals, setOpenForm }) {
 
   const handleSubmission = (e) => {
     e.preventDefault();
+
     const goals = savedGoals();
+    console.log("Saved goals", goals);
     const id = !goals.length ? 1 : goals[goals.length - 1].id + 1;
     const goalObj = {
       id: id,
@@ -35,8 +40,9 @@ export function Modal({ setFilteredGoals, setOpenForm }) {
     };
 
     const updatedGoals = [...goals, goalObj];
-    setFilteredGoals(updatedGoals);
+    setGoals(updatedGoals);
     saveGoals(updatedGoals);
+    setFilteredGoals(updatedGoals);
     setOpenForm(false);
 
     // Reset form fields
