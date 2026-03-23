@@ -5,8 +5,7 @@ import { Modal } from "./modal";
 import { Card } from "./card";
 import { Footer } from "./footer";
 import { Filter } from "./filter";
-import { getIndex } from "./utils/helper";
-import { savedGoals } from "./utils/storage";
+import { savedGoals, saveGoals } from "./utils/storage";
 import { filterActiveGoals } from "./utils/filter";
 
 function App() {
@@ -18,7 +17,7 @@ function App() {
   const activeGoals = filterActiveGoals(goals);
 
   useEffect(() => {
-    localStorage.setItem("goals", JSON.stringify(goals));
+    saveGoals(goals);
   }, [goals]);
 
   const handleFormOpen = () => {
@@ -32,17 +31,24 @@ function App() {
       );
       return newGoals;
     });
+
+    setGoals((goals) => {
+      const newGoals = goals.map((goal) =>
+        goal.id === id ? { ...goal, completed: !goal.completed } : goal,
+      );
+      return newGoals;
+    });
   };
 
-  const handleDeletion = (e) => {
-    const selectedCard = e.target.closest("li");
-    const cardId = parseInt(selectedCard.id.split("-")[1]);
-
+  const handleDeletion = (id) => {
     setFilteredGoals((goals) => {
-      const copiedGoals = [...goals];
-      const index = getIndex(cardId, copiedGoals);
-      copiedGoals.splice(index, 1);
-      return copiedGoals;
+      const newGoals = goals.filter((goal) => goal.id !== id);
+      return newGoals;
+    });
+
+    setGoals((goals) => {
+      const newGoals = goals.filter((goal) => goal.id !== id);
+      return newGoals;
     });
   };
 
@@ -52,7 +58,7 @@ function App() {
       <main>
         <div className="container">
           <div className="goals-container">
-            <Filter setFilteredGoals={setFilteredGoals} />
+            <Filter goals={goals} setFilteredGoals={setFilteredGoals} />
             <div className="goals-heading">
               <h2>Goals</h2>
               <span className="goals-count">{goals.length}</span>
@@ -72,7 +78,10 @@ function App() {
                     key={`${goal.name}-${goal.id}`}
                     id={`${goal.name}-${goal.id}`}
                   >
-                    <button className="card-remove" onClick={handleDeletion}>
+                    <button
+                      className="card-remove"
+                      onClick={() => handleDeletion(goal.id)}
+                    >
                       remove
                     </button>
                     <Card goal={goal} toggleStatus={toggleStatus} />
@@ -90,6 +99,7 @@ function App() {
         </div>
         {openForm && (
           <Modal
+            setGoals={setGoals}
             setFilteredGoals={setFilteredGoals}
             setOpenForm={setOpenForm}
           />

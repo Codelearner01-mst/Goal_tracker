@@ -1,54 +1,43 @@
-import { useState, useActionState } from "react";
+import { useState } from "react";
 import { savedGoals, saveGoals } from "./utils/storage";
-//import { submitForm } from "./utils/submmission";
-//import { SubmitConfirmationCard } from "./submitCard";
+import { SubmitConfirmationCard } from "./submitCard";
 
 export function Modal({ setGoals, setFilteredGoals, setOpenForm }) {
-  const [name, setName] = useState("");
-  const [date, setDate] = useState("");
-  const [description, setDescription] = useState("");
-  //const [state, submit, isPending] = useActionState(submitForm, "");
+  const [message, setMessage] = useState("");
+  const [isPending, setIsPending] = useState(false);
 
-  const handleNameChange = (e) => {
-    setName(e.target.value);
-  };
+  const submit = async (event) => {
+    event.preventDefault();
+    setIsPending(true);
+    const formData = new FormData(event.target);
 
-  const handleDateChange = (e) => {
-    setDate(e.target.value);
-  };
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    const goals = savedGoals();
+    const id = !goals.length ? 1 : goals[goals.length - 1].id + 1;
 
-  const handleDescriptionChange = (e) => {
-    setDescription(e.target.value);
+    if (formData.get("name").length > 3) {
+      const goalObj = {
+        id,
+        name: formData.get("name"),
+        description: formData.get("description"),
+        date: formData.get("date"),
+        completed: false,
+      };
+      const updatedGoals = [...goals, goalObj];
+      setGoals(updatedGoals);
+      setFilteredGoals(updatedGoals);
+      saveGoals(updatedGoals);
+      setMessage("Goal added to goals");
+      setTimeout(() => setOpenForm(false), 100);
+    } else {
+      setMessage("Failed to add goals");
+    }
+
+    setIsPending(false);
   };
 
   const handleFormHidden = () => {
     setOpenForm(false);
-  };
-
-  const handleSubmission = (e) => {
-    e.preventDefault();
-
-    const goals = savedGoals();
-    console.log("Saved goals", goals);
-    const id = !goals.length ? 1 : goals[goals.length - 1].id + 1;
-    const goalObj = {
-      id: id,
-      name: name,
-      description: description,
-      date: date,
-      completed: false,
-    };
-
-    const updatedGoals = [...goals, goalObj];
-    setGoals(updatedGoals);
-    saveGoals(updatedGoals);
-    setFilteredGoals(updatedGoals);
-    setOpenForm(false);
-
-    // Reset form fields
-    setName("");
-    setDate("");
-    setDescription("");
   };
 
   return (
@@ -62,13 +51,14 @@ export function Modal({ setGoals, setFilteredGoals, setOpenForm }) {
           >
             ✕
           </button>
+          <SubmitConfirmationCard message={message} />
 
           <div className="modal-header">
             <h2>Create New Goal</h2>
             <p>Add a new goal to track your progress</p>
           </div>
 
-          <form onSubmit={handleSubmission} className="goal-form">
+          <form onSubmit={submit} className="goal-form">
             <div className="form-group">
               <label htmlFor="title" className="form-label">
                 Goal Title
@@ -78,8 +68,7 @@ export function Modal({ setGoals, setFilteredGoals, setOpenForm }) {
                 id="title"
                 className="form-input"
                 placeholder="Enter your goal title"
-                value={name}
-                onChange={handleNameChange}
+                name="name"
                 required
               />
             </div>
@@ -92,8 +81,7 @@ export function Modal({ setGoals, setFilteredGoals, setOpenForm }) {
                 type="date"
                 id="date"
                 className="form-input"
-                value={date}
-                onChange={handleDateChange}
+                name="date"
                 required
               />
             </div>
@@ -107,8 +95,6 @@ export function Modal({ setGoals, setFilteredGoals, setOpenForm }) {
                 name="description"
                 className="form-textarea"
                 placeholder="Describe your goal in detail"
-                value={description}
-                onChange={handleDescriptionChange}
                 rows="4"
                 required
               ></textarea>
@@ -123,7 +109,7 @@ export function Modal({ setGoals, setFilteredGoals, setOpenForm }) {
                 Cancel
               </button>
               <button type="submit" className="btn-primary">
-                Add Goal
+                {isPending ? "Adding..." : "Add Goal"}
               </button>
             </div>
           </form>
