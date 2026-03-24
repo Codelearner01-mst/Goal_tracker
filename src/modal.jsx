@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { savedGoals, saveGoals } from "./utils/storage";
 import { SubmitConfirmationCard } from "./submitCard";
+import { GoalsContext } from "./utils/context";
 
-export function Modal({ setGoals, setFilteredGoals, setOpenForm }) {
+export function Modal({ setFilteredGoals, setOpenForm }) {
   const [message, setMessage] = useState("");
   const [isPending, setIsPending] = useState(false);
+  const { setGoals } = useContext(GoalsContext);
 
   const submit = async (event) => {
     event.preventDefault();

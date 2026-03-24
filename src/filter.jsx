@@ -1,6 +1,9 @@
+import { useContext } from "react";
 import { filterActiveGoals, filterCompleted } from "./utils/filter";
+import { GoalsContext } from "./utils/context";
 
-export function Filter({ goals, setFilteredGoals }) {
+export function Filter({ setFilteredGoals }) {
+  const { goals } = useContext(GoalsContext);
   const completed = filterCompleted(goals);
   const active = filterActiveGoals(goals);
 
