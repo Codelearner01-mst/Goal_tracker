@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useMemo, useContext } from "react";
 import { Header } from "./header";
 import "./App.css";
 import { Modal } from "./modal";
@@ -13,7 +13,7 @@ export function Main() {
   const { goals, setGoals } = useContext(GoalsContext);
   const [filteredGoals, setFilteredGoals] = useState(goals);
   const [openForm, setOpenForm] = useState(false);
-  const activeGoals = filterActiveGoals(goals);
+  const activeGoals = useMemo(() => filterActiveGoals(goals), [goals]);
 
   useEffect(() => {
     saveGoals(goals);
@@ -111,7 +111,7 @@ export function Main() {
                 + Add Goal
               </button>
             </div>
-            <Filter goals={goals} setFilteredGoals={setFilteredGoals} />
+            <Filter setFilteredGoals={setFilteredGoals} />
             <div className="goals-heading">
               <h2>Goals</h2>
               <span className="goals-count">{goals.length}</span>
