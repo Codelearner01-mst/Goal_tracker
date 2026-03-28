@@ -1,23 +1,28 @@
-export function Header({ count }) {
+export function Header({ count, onAddGoal }) {
   return (
     <>
       <header className="app-header">
-        <div className="header-content">
-          <div className="brand">
-            <h1 className="brand-title">Goal Tracker</h1>
-            <p className="brand-subtitle">
-              Track your goals. Improve your life.
-            </p>
+        <nav className="navbar">
+          <div className="nav-brand">
+            <span className="nav-logo">🎯</span>
+            <span className="nav-brand-name">GoalTracker</span>
           </div>
-          <div className="header-actions">
-            <div className="stats-badge">
-              <span className="stats-label">Active Goals</span>
-              <span className="stats-value" id="goals-count">
-                {count}
-              </span>
+          <ul className="nav-links">
+            <li><a href="#home" className="nav-link">Home</a></li>
+            <li><a href="#goals" className="nav-link">My Goals</a></li>
+            <li><a href="#progress" className="nav-link">Progress</a></li>
+            <li><a href="#about" className="nav-link">About</a></li>
+          </ul>
+          <div className="nav-actions">
+            <div className="nav-stats-badge">
+              <span className="nav-stats-icon">🔥</span>
+              <span className="nav-stats-text">{count} active</span>
             </div>
+            <button className="nav-cta-btn" onClick={onAddGoal}>
+              + Add Goal
+            </button>
           </div>
-        </div>
+        </nav>
       </header>
     </>
   );

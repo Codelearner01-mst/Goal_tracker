@@ -1,48 +1,50 @@
-import { useContext } from "react";
+import { useState, useContext } from "react";
 import { filterActiveGoals, filterCompleted } from "./utils/filter";
 import { GoalsContext } from "./utils/context";
 
 export function Filter({ setFilteredGoals }) {
   const { goals } = useContext(GoalsContext);
+  const [activeTab, setActiveTab] = useState("all");
   const completed = filterCompleted(goals);
   const active = filterActiveGoals(goals);
 
-  function handleGoalsFilter(fllter) {
-    setFilteredGoals(fllter);
+  const tabs = [
+    { key: "all", label: "All", data: goals, count: goals.length },
+    {
+      key: "ongoing",
+      label: "Ongoing",
+      data: active,
+      count: active.length,
+    },
+    {
+      key: "completed",
+      label: "Completed",
+      data: completed,
+      count: completed.length,
+    },
+  ];
+
+  function handleTab(tab) {
+    setActiveTab(tab.key);
+    setFilteredGoals(tab.data);
   }
 
   return (
-    <>
-      <div className="filter-container">
-        <div className="all">
+    <div className="filter-bar">
+      {tabs.map((tab) => (
+        <button
+          key={tab.key}
+          className={`filter-tab ${activeTab === tab.key ? "filter-tab--active" : ""}`}
+          onClick={() => handleTab(tab)}
+        >
+          <span className="filter-tab-label">{tab.label}</span>
           <span
-            role="button"
-            className="filter-category-text"
-            onClick={() => handleGoalsFilter(goals)}
+            className={`filter-tab-count ${activeTab === tab.key ? "filter-tab-count--active" : ""}`}
           >
-            All
+            {tab.count}
           </span>
-        </div>
-        <div>
-          <span
-            role="button"
-            className="filter-category-text"
-            onClick={() => handleGoalsFilter(completed)}
-          >
-            Completed
-          </span>
-        </div>
-        <div>
-          <span
-            role="button"
-            className="filter-category-text"
-            onClick={() => handleGoalsFilter(active)}
-          >
-            {" "}
-            Ongoing
-          </span>
-        </div>
-      </div>
-    </>
+        </button>
+      ))}
+    </div>
   );
 }

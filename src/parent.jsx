@@ -53,10 +53,64 @@ export function Main() {
 
   return (
     <>
-      <Header count={activeGoals.length} />
+      <Header count={activeGoals.length} onAddGoal={handleFormOpen} />
+
+      {/* Hero Section */}
+      <section className="hero-section" id="home">
+        <div className="hero-content">
+          <div className="hero-badge">🚀 Start achieving today</div>
+          <h1 className="hero-title">
+            Set Goals. <span className="hero-highlight">Stay Focused.</span>
+            <br />
+            Achieve More.
+          </h1>
+          <p className="hero-subtitle">
+            GoalTracker helps you define what matters, track your progress, and
+            celebrate every win — big or small.
+          </p>
+          <div className="hero-actions">
+            <button className="hero-cta-primary" onClick={handleFormOpen}>
+              + Create Your First Goal
+            </button>
+            <a href="#goals" className="hero-cta-secondary">
+              View My Goals ↓
+            </a>
+          </div>
+          <div className="hero-stats">
+            <div className="hero-stat">
+              <span className="hero-stat-value">{goals.length}</span>
+              <span className="hero-stat-label">Total Goals</span>
+            </div>
+            <div className="hero-stat-divider" />
+            <div className="hero-stat">
+              <span className="hero-stat-value">{activeGoals.length}</span>
+              <span className="hero-stat-label">In Progress</span>
+            </div>
+            <div className="hero-stat-divider" />
+            <div className="hero-stat">
+              <span className="hero-stat-value">
+                {goals.length - activeGoals.length}
+              </span>
+              <span className="hero-stat-label">Completed</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <main>
-        <div className="container">
+        <div className="container" id="goals">
           <div className="goals-container">
+            <div className="goals-section-header">
+              <div>
+                <h2 className="goals-section-title">My Goals</h2>
+                <p className="goals-section-subtitle">
+                  Track and manage all your goals in one place
+                </p>
+              </div>
+              <button className="btn-add-goal" onClick={handleFormOpen}>
+                + Add Goal
+              </button>
+            </div>
             <Filter goals={goals} setFilteredGoals={setFilteredGoals} />
             <div className="goals-heading">
               <h2>Goals</h2>
@@ -77,23 +131,15 @@ export function Main() {
                     key={`${goal.name}-${goal.id}`}
                     id={`${goal.name}-${goal.id}`}
                   >
-                    <button
-                      className="card-remove"
-                      onClick={() => handleDeletion(goal.id)}
-                    >
-                      remove
-                    </button>
-                    <Card goal={goal} toggleStatus={toggleStatus} />
+                    <Card
+                      goal={goal}
+                      toggleStatus={toggleStatus}
+                      onDelete={handleDeletion}
+                    />
                   </li>
                 ))}
               </ul>
             </div>
-          </div>
-
-          <div className="btn-container">
-            <button className="create-goal-btn" onClick={handleFormOpen}>
-              +
-            </button>
           </div>
         </div>
         {openForm && (
