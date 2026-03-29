@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useContext } from "react";
+import { useState, useEffect, useMemo, useContext, useCallback } from "react";
 import { Header } from "./header";
 import "./App.css";
 import { Modal } from "./modal";
@@ -19,37 +19,43 @@ export function Main() {
     saveGoals(goals);
   }, [goals]);
 
-  const handleFormOpen = () => {
+  const handleFormOpen = useCallback(() => {
     setOpenForm(true);
-  };
+  }, []);
 
-  const toggleStatus = (id) => {
-    setFilteredGoals((goals) => {
-      const newGoals = goals.map((goal) =>
-        goal.id === id ? { ...goal, completed: !goal.completed } : goal,
-      );
-      return newGoals;
-    });
+  const toggleStatus = useCallback(
+    (id) => {
+      setFilteredGoals((goals) => {
+        const newGoals = goals.map((goal) =>
+          goal.id === id ? { ...goal, completed: !goal.completed } : goal,
+        );
+        return newGoals;
+      });
 
-    setGoals((goals) => {
-      const newGoals = goals.map((goal) =>
-        goal.id === id ? { ...goal, completed: !goal.completed } : goal,
-      );
-      return newGoals;
-    });
-  };
+      setGoals((goals) => {
+        const newGoals = goals.map((goal) =>
+          goal.id === id ? { ...goal, completed: !goal.completed } : goal,
+        );
+        return newGoals;
+      });
+    },
+    [setGoals, setFilteredGoals],
+  );
 
-  const handleDeletion = (id) => {
-    setFilteredGoals((goals) => {
-      const newGoals = goals.filter((goal) => goal.id !== id);
-      return newGoals;
-    });
+  const handleDeletion = useCallback(
+    (id) => {
+      setFilteredGoals((goals) => {
+        const newGoals = goals.filter((goal) => goal.id !== id);
+        return newGoals;
+      });
 
-    setGoals((goals) => {
-      const newGoals = goals.filter((goal) => goal.id !== id);
-      return newGoals;
-    });
-  };
+      setGoals((goals) => {
+        const newGoals = goals.filter((goal) => goal.id !== id);
+        return newGoals;
+      });
+    },
+    [setGoals, setFilteredGoals],
+  );
 
   return (
     <>

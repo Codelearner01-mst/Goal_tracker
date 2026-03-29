@@ -1,4 +1,6 @@
-export function Card({ goal, toggleStatus, onDelete }) {
+import { memo } from "react";
+
+export const Card = memo(({ goal, toggleStatus, onDelete }) => {
   return (
     <div className={`card ${goal.completed ? "card--completed" : ""}`}>
       <div className="card-checkbox">
@@ -40,4 +42,6 @@ export function Card({ goal, toggleStatus, onDelete }) {
       </div>
     </div>
   );
-}
+});
+
+export default Card;
