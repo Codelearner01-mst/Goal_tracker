@@ -1,6 +1,14 @@
 import React from "react";
+import { Link } from "react-router";
+import { useContext } from "react";
+import { GoalsContext } from "./utils/context";
+import { filterActiveGoals } from "./utils/filter";
 
-export const Header = React.memo(({ count, onAddGoal }) => {
+export const Header = React.memo(({ onAddGoal }) => {
+
+  const { goals } = useContext(GoalsContext);
+  const activeCount = filterActiveGoals(goals).length;
+
   return (
     <>
       <header className="app-header">
@@ -11,30 +19,30 @@ export const Header = React.memo(({ count, onAddGoal }) => {
           </div>
           <ul className="nav-links">
             <li>
-              <a href="#home" className="nav-link">
+              <Link to="/" className="nav-link">
                 Home
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#goals" className="nav-link">
+              <Link to="/goals" className="nav-link">
                 My Goals
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#progress" className="nav-link">
+              <Link to="/progress" className="nav-link">
                 Progress
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#about" className="nav-link">
+              <Link to="/about" className="nav-link">
                 About
-              </a>
+              </Link>
             </li>
           </ul>
           <div className="nav-actions">
             <div className="nav-stats-badge">
               <span className="nav-stats-icon">🔥</span>
-              <span className="nav-stats-text">{count} active</span>
+              <span className="nav-stats-text">{activeCount} active</span>
             </div>
             <button className="nav-cta-btn" onClick={onAddGoal}>
               + Add Goal

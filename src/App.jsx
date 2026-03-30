@@ -2,7 +2,7 @@ import { GoalsProvider } from "./utils/context";
 import { Main } from "./parent";
 
 function App() {
-  return <GoalsProvider>{<Main />}</GoalsProvider>;
+  return <Main />;
 }
 
 export default App;

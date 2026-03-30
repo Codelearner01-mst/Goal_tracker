@@ -1,16 +1,14 @@
 import { useState, useEffect, useMemo, useContext, useCallback } from "react";
-import { Header } from "./header";
+import { Link } from "react-router";
 import "./App.css";
 import { Modal } from "./modal";
-import { Card } from "./card";
-import { Footer } from "./footer";
-import { Filter } from "./filter";
+
 import { saveGoals } from "./utils/storage";
 import { filterActiveGoals } from "./utils/filter";
 import { GoalsContext } from "./utils/context";
 
 export function Main() {
-  const { goals, setGoals } = useContext(GoalsContext);
+  const { goals } = useContext(GoalsContext);
   const [filteredGoals, setFilteredGoals] = useState(goals);
   const [openForm, setOpenForm] = useState(false);
   const activeGoals = useMemo(() => filterActiveGoals(goals), [goals]);
@@ -23,44 +21,8 @@ export function Main() {
     setOpenForm(true);
   }, []);
 
-  const toggleStatus = useCallback(
-    (id) => {
-      setFilteredGoals((goals) => {
-        const newGoals = goals.map((goal) =>
-          goal.id === id ? { ...goal, completed: !goal.completed } : goal,
-        );
-        return newGoals;
-      });
-
-      setGoals((goals) => {
-        const newGoals = goals.map((goal) =>
-          goal.id === id ? { ...goal, completed: !goal.completed } : goal,
-        );
-        return newGoals;
-      });
-    },
-    [setGoals, setFilteredGoals],
-  );
-
-  const handleDeletion = useCallback(
-    (id) => {
-      setFilteredGoals((goals) => {
-        const newGoals = goals.filter((goal) => goal.id !== id);
-        return newGoals;
-      });
-
-      setGoals((goals) => {
-        const newGoals = goals.filter((goal) => goal.id !== id);
-        return newGoals;
-      });
-    },
-    [setGoals, setFilteredGoals],
-  );
-
   return (
     <>
-      <Header count={activeGoals.length} onAddGoal={handleFormOpen} />
-
       {/* Hero Section */}
       <section className="hero-section" id="home">
         <div className="hero-content">
@@ -78,9 +40,9 @@ export function Main() {
             <button className="hero-cta-primary" onClick={handleFormOpen}>
               + Create Your First Goal
             </button>
-            <a href="#goals" className="hero-cta-secondary">
+            <Link to="/goals" className="hero-cta-secondary">
               View My Goals ↓
-            </a>
+            </Link>
           </div>
           <div className="hero-stats">
             <div className="hero-stat">
@@ -104,50 +66,7 @@ export function Main() {
       </section>
 
       <main>
-        <div className="container" id="goals">
-          <div className="goals-container">
-            <div className="goals-section-header">
-              <div>
-                <h2 className="goals-section-title">My Goals</h2>
-                <p className="goals-section-subtitle">
-                  Track and manage all your goals in one place
-                </p>
-              </div>
-              <button className="btn-add-goal" onClick={handleFormOpen}>
-                + Add Goal
-              </button>
-            </div>
-            <Filter setFilteredGoals={setFilteredGoals} />
-            <div className="goals-heading">
-              <h2>Goals</h2>
-              <span className="goals-count">{goals.length}</span>
-            </div>
-            <div className="goals">
-              {!goals.length && (
-                <div>
-                  <p className="sub-title">
-                    You do not have any goal yet. Create your first goal to get
-                    started!
-                  </p>
-                </div>
-              )}
-              <ul>
-                {filteredGoals.map((goal) => (
-                  <li
-                    key={`${goal.name}-${goal.id}`}
-                    id={`${goal.name}-${goal.id}`}
-                  >
-                    <Card
-                      goal={goal}
-                      toggleStatus={toggleStatus}
-                      onDelete={handleDeletion}
-                    />
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </div>
+        <div className="container" id="goals"></div>
         {openForm && (
           <Modal
             setFilteredGoals={setFilteredGoals}
@@ -155,7 +74,6 @@ export function Main() {
           />
         )}
       </main>
-      <Footer />
     </>
   );
 }

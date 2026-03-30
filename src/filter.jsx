@@ -7,9 +7,10 @@ export function Filter({ setFilteredGoals }) {
   const [activeTab, setActiveTab] = useState("all");
   const completed = filterCompleted(goals);
   const active = filterActiveGoals(goals);
+  const totalCount = goals.length;
 
   const tabs = [
-    { key: "all", label: "All", data: goals, count: goals.length },
+    { key: "all", label: "All", data: goals, count: totalCount },
     {
       key: "ongoing",
       label: "Ongoing",
