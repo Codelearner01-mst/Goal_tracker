@@ -275,6 +275,20 @@ main {
   background: rgba(255, 255, 255, 0.1);
 }
 
+.hamburger-btn {
+  display: none;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.8rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0.2rem;
+  margin-left: 0.5rem;
+  z-index: 300;
+  transition: transform 0.2s ease;
+}
+
 .nav-actions {
   display: flex;
   align-items: center;
@@ -335,11 +349,9 @@ main {
   left: -50%;
   width: 200%;
   height: 200%;
-  background: radial-gradient(
-    circle at 60% 40%,
-    rgba(99, 102, 241, 0.15) 0%,
-    transparent 60%
-  );
+  background: radial-gradient(circle at 60% 40%,
+      rgba(99, 102, 241, 0.15) 0%,
+      transparent 60%);
   pointer-events: none;
 }
 
@@ -821,16 +833,14 @@ main {
 
 /* Enhanced Header Styles */
 .app-header {
-  background: linear-gradient(
-    135deg,
-    var(--primary-color),
-    var(--primary-hover)
-  );
+  background: linear-gradient(135deg,
+      var(--primary-color),
+      var(--primary-hover));
   color: white;
   padding: 2rem;
   margin-bottom: 2rem;
   position: relative;
-  overflow: hidden;
+  /* overflow: hidden; Removed to allow mobile menu to overflow */
   border-bottom: 2px solid rgba(255, 255, 255, 0.2);
 }
 
@@ -961,8 +971,41 @@ main {
     padding: 0 1rem;
   }
 
+  .hamburger-btn {
+    display: block;
+  }
+
   .nav-links {
-    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: rgba(16, 16, 75, 0.98);
+    flex-direction: column;
+    padding: 1rem 2rem 2rem;
+    gap: 1rem;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+    transform: translateY(-150%);
+    opacity: 0;
+    transition: all 0.3s ease-in-out;
+    visibility: hidden;
+    z-index: 100;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+  }
+
+  .nav-links.mobile-open {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .nav-link {
+    display: block;
+    font-size: 1.2rem;
+    padding: 0.8rem;
+    text-align: center;
+    width: 100%;
+    border-radius: 8px;
   }
 
   .nav-stats-badge {
